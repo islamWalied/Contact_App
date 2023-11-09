@@ -13,7 +13,7 @@ class PersonController extends Controller
      */
     public function index()
     {
-        $person = Person::all();
+        $person = Person::with('business')->get();
         return view('person.index',compact('person'));
     }
 
@@ -34,7 +34,7 @@ class PersonController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'phone' => 'required|numeric',
-            'business_id' => 'required|numeric|exists:businesses,id',
+            'business_id' => 'nullable|numeric',
             'email' => 'required|email',
         ]);
         Person::create([
@@ -72,7 +72,7 @@ class PersonController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'phone' => 'required|numeric',
-            'business_id' => 'required|exists:businesses,id',
+            'business_id' => 'nullable|numeric',
             'email' => 'required|email|unique:users',
         ]);
         $person->update([

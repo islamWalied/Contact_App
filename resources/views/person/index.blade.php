@@ -66,7 +66,7 @@
                                             {{$per->phone}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{$per->business_id}}
+                                            {{$per->business->business_name}}
                                         </td>
                                         <td class="px-6 py-4">
                                             <a href="{{route('person.edit',$per->id)}}" class="font-medium m-2 text-blue-600 dark:text-blue-500 hover:underline">

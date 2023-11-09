@@ -16,4 +16,8 @@ class Person extends Model
         'phone',
         'business_id',
     ];
+    public function business()
+    {
+        return $this->belongsTo(Business::class)->withDefault(['business_name' => 'No Business']);
+    }
 }
