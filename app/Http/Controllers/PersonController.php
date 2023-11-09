@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
 use App\Models\Person;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class PersonController extends Controller
      */
     public function index()
     {
-        //
+        $person = Person::all();
+        return view('person.index',compact('person'));
     }
 
     /**
@@ -20,7 +22,7 @@ class PersonController extends Controller
      */
     public function create()
     {
-        //
+        return view('person.create',['business'=> Business::all()]);
     }
 
     /**
@@ -28,7 +30,21 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone' => 'required|numeric',
+            'business_id' => 'required|numeric|exists:businesses,id',
+            'email' => 'required|email',
+        ]);
+        Person::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
+            'business_id' => $request->business_id,
+            'email' => $request->email,
+        ]);
+        return redirect()->route('person.index')->with('success','Person Added');
     }
 
     /**
@@ -44,7 +60,7 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        //
+        return view('person.edit',['person' => $person,'business' => Business::all()]);
     }
 
     /**
@@ -52,7 +68,21 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
-        //
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone' => 'required|numeric',
+            'business_id' => 'required|exists:businesses,id',
+            'email' => 'required|email|unique:users',
+        ]);
+        $person->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
+            'business_id' => $request->business_id,
+            'email' => $request->email,
+        ]);
+        return redirect()->route('person.index')->with('success','Person Updated!');
     }
 
     /**
@@ -60,6 +90,7 @@ class PersonController extends Controller
      */
     public function destroy(Person $person)
     {
-        //
+        $person->delete();
+        return redirect()->route('person.index')->with('success','Person Deleted!');
     }
 }
