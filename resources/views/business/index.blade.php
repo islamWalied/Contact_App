@@ -51,6 +51,9 @@
                                     Contact email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Category
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Action
                                 </th>
                             </tr>
@@ -63,6 +66,11 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             {{$bus->contact_email}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            @foreach($bus->categories as $cat)
+                                                {{$cat->category_name }} |
+                                            @endforeach
                                         </td>
                                         <td class="px-6 py-4">
                                             <a href="{{route('business.edit',$bus->id)}}" class="font-medium m-2 text-blue-600 dark:text-blue-500 hover:underline">
