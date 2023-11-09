@@ -31,10 +31,15 @@ Route::resource('/person',\App\Http\Controllers\PersonController::class);
 
 
 
-
 Route::get('/business/trash',[\App\Http\Controllers\BusinessController::class,'trash'])->name('business.trash');
 Route::delete('/business/{business}/force-delete',[\App\Http\Controllers\BusinessController::class,'forceDelete'])->name('business.forceDelete');
 Route::resource('/business',\App\Http\Controllers\BusinessController::class);
+
+Route::get('tasks',[\App\Http\Controllers\TaskController::class,'index'])->name('tasks.index');
+Route::get('tasks/create',[\App\Http\Controllers\TaskController::class,'create'])->name('tasks.create');
+Route::get('tasks/{task}/show',[\App\Http\Controllers\TaskController::class,'show'])->name('tasks.show');
+Route::post('tasks/store',[\App\Http\Controllers\TaskController::class,'store'])->name('tasks.store');
+Route::patch('tasks/{task}/completed',[\App\Http\Controllers\TaskController::class,'complete'])->name('tasks.complete');
 
 
 require __DIR__.'/auth.php';

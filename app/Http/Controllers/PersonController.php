@@ -13,7 +13,7 @@ class PersonController extends Controller
      */
     public function index()
     {
-        $person = Person::with('business')->get();
+        $person = Person::with('business','tasks','tags')->get();
         return view('person.index',compact('person'));
     }
 

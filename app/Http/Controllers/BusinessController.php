@@ -12,7 +12,7 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        $business = Business::all();
+        $business = Business::with('tags','categories')->get();
         return view('business.index',compact('business'));
     }
 

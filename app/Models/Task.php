@@ -20,4 +20,11 @@ class Task extends Model
     {
         return $this->morphTo();
     }
+    public function markAsCompleted()
+    {
+        $this->status = 'completed';
+        $this->save();
+        return true;
+    }
+
 }

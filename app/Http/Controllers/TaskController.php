@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
+use App\Models\Person;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -13,7 +16,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::all();
+        return view('tasks.index',compact('tasks'));
     }
 
     /**
@@ -27,9 +31,23 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required','string'],
+            'description' => ['required','string'],
+        ]);
+        $target_model = match($request->target_model){
+            'business' => Business::find($request->taskable_id),
+            'person' => Person::find($request->taskable_id)
+        };
+
+        $target_model->tasks()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -39,28 +57,10 @@ class TaskController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
+    public function complete(Task $task)
     {
-        //
+        $task->markAsCompleted();
+        return redirect()->back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTaskRequest $request, Task $task)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Task $task)
-    {
-        //
-    }
 }
