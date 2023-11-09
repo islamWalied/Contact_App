@@ -24,4 +24,12 @@ class Person extends Model
     {
         return $this->belongsTo(Business::class)->withTrashed()/*->withDefault(['business_name' => 'No Business'])*/;
     }
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class,'taggable');
+    }
+    public function tasks()
+    {
+        return $this->morphMany(Task::class,'taskable');
+    }
 }

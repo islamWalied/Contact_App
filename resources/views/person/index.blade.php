@@ -49,6 +49,9 @@
                                     Business Name
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Tags
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Action
                                 </th>
                             </tr>
@@ -67,6 +70,11 @@
                                         </td>
                                         <td class="px-6 py-4 lin {{($per->business?->deleted_at)  ? 'italic line-through font-bold' : 'non-italic'}}">
                                             {{$per->business?->business_name}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            @foreach($per->tags as $tag)
+                                                <span class="bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{$tag->name}}</span>
+                                            @endforeach
                                         </td>
                                         <td class="px-6 py-4">
                                             <a href="{{route('person.edit',$per->id)}}" class="font-medium m-2 text-blue-600 dark:text-blue-500 hover:underline">

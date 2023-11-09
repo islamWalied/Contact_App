@@ -1,6 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Business
             :)
             {{ $business->business_name}}
 
@@ -26,6 +27,11 @@
                     <div class="sm:col-span-3">
                         <div class="p-6 text-gray-900 dark:text-gray-100 col-4">
                             <span>Tasks</span>
+                            @foreach($business->tasks as $task)
+                                <h4 class="font-semibold">{{$task->title}}</h4>
+                                <p>{{$task->description}}</p>
+                                <p>Status: {{$task->status}}</p>
+                            @endforeach
                         </div>
                     </div>
                 </div>
