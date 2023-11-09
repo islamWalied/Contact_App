@@ -23,6 +23,9 @@
                                     @endforeach</p>
                             </a>
                         </div>
+                        <div class="p-6 text-gray-900 dark:text-gray-100 col-4">
+                            <a href="{{route('business.index')}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Back</a>
+                        </div>
                     </div>
                     <div class="sm:col-span-3">
                         <div class="p-6 text-gray-900 dark:text-gray-100 col-4">

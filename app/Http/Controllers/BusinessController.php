@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class BusinessController extends Controller
@@ -53,7 +54,10 @@ class BusinessController extends Controller
      */
     public function edit(Business $business)
     {
-        return view('business.edit',compact('business'));
+        return view('business.edit',[
+            'business' =>$business,
+            'tags' => Tag::all()
+        ]);
     }
 
     /**
@@ -69,6 +73,8 @@ class BusinessController extends Controller
             'business_name' => $request->business_name,
             'contact_email' => $request->contact_email,
         ]);
+        $business->tags()->sync($request->tags);
+
         return redirect()->route('business.index')->with('success','Business Updated!');
     }
 

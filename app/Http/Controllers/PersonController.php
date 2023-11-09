@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Business;
 use App\Models\Person;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PersonController extends Controller
@@ -60,7 +61,7 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        return view('person.edit',['person' => $person,'business' => Business::all()]);
+        return view('person.edit',['person' => $person,'business' => Business::all(),'tags' => Tag::all()]);
     }
 
     /**
@@ -82,6 +83,7 @@ class PersonController extends Controller
             'business_id' => $request->business_id,
             'email' => $request->email,
         ]);
+        $person->tags()->sync($request->tags);
         return redirect()->route('person.index')->with('success','Person Updated!');
     }
 
