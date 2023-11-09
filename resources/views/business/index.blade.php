@@ -62,7 +62,8 @@
                                 @foreach($business as $bus)
                                     <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                         <td class="px-6 py-4">
-                                            {{$bus->business_name}}
+                                            <a href="{{route('business.show',$bus->id)}}">{{$bus->business_name}}</a>
+
                                         </td>
                                         <td class="px-6 py-4">
                                             {{$bus->contact_email}}

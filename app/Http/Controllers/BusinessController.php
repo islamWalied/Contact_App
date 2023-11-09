@@ -45,7 +45,7 @@ class BusinessController extends Controller
      */
     public function show(Business $business)
     {
-        //
+        return view('business.details',compact('business'));
     }
 
     /**
