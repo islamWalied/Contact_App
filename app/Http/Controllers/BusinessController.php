@@ -12,7 +12,8 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        //
+        $business = Business::all();
+        return view('business.index',compact('business'));
     }
 
     /**
@@ -20,7 +21,7 @@ class BusinessController extends Controller
      */
     public function create()
     {
-        //
+        return view('business.create');
     }
 
     /**
@@ -28,7 +29,15 @@ class BusinessController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'business_name' => 'required|string',
+            'contact_email' => 'nullable|email',
+        ]);
+        Business::create([
+           'business_name' => $request->business_name,
+           'contact_email' => $request->contact_email,
+        ]);
+        return redirect()->route('business.index')->with('success','Business Added!');
     }
 
     /**
@@ -44,7 +53,7 @@ class BusinessController extends Controller
      */
     public function edit(Business $business)
     {
-        //
+        return view('business.edit',compact('business'));
     }
 
     /**
@@ -52,7 +61,15 @@ class BusinessController extends Controller
      */
     public function update(Request $request, Business $business)
     {
-        //
+        $request->validate([
+            'business_name' => 'required|string',
+            'contact_email' => 'nullable|email',
+        ]);
+        $business->update([
+            'business_name' => $request->business_name,
+            'contact_email' => $request->contact_email,
+        ]);
+        return redirect()->route('business.index')->with('success','Business Updated!');
     }
 
     /**
@@ -60,6 +77,13 @@ class BusinessController extends Controller
      */
     public function destroy(Business $business)
     {
-        //
+        $business->delete();
+        return redirect()->route('business.index')->with('success','Business Deleted!');
+    }
+
+    public function trash(Business $business)
+    {
+        Business::onlyTrashed()->get();
+        return view('business.trash');
     }
 }

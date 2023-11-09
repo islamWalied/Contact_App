@@ -29,4 +29,5 @@ Route::middleware('auth')->group(function () {
 });
 Route::resource('/person',\App\Http\Controllers\PersonController::class);
 Route::resource('/business',\App\Http\Controllers\BusinessController::class);
+Route::get('/business/trash',[\App\Http\Controllers\BusinessController::class,'trash']);
 require __DIR__.'/auth.php';
