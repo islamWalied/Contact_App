@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::resource('/person',\App\Http\Controllers\PersonController::class);
+Route::get('/business/trash',[\App\Http\Controllers\BusinessController::class,'trash'])->name('business.trash');
+Route::delete('/business/{business}/force-delete',[\App\Http\Controllers\BusinessController::class,'forceDelete'])->name('business.forceDelete');
 Route::resource('/business',\App\Http\Controllers\BusinessController::class);
-Route::get('/business/trash',[\App\Http\Controllers\BusinessController::class,'trash']);
 require __DIR__.'/auth.php';

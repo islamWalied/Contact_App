@@ -81,9 +81,15 @@ class BusinessController extends Controller
         return redirect()->route('business.index')->with('success','Business Deleted!');
     }
 
-    public function trash(Business $business)
+    public function trash()
     {
-        Business::onlyTrashed()->get();
-        return view('business.trash');
+        $business = Business::onlyTrashed()->latest()->get();
+        return view('business.trash',compact('business'));
+    }
+    public function forceDelete($id)
+    {
+        $business = Business::withTrashed()->findOrFail($id);
+        $business->forceDelete();
+        return redirect()->route('business.trash')->with('success','Business Deleted!');
     }
 }

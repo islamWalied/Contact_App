@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('People') }}
+            {{ __('Business') }}
         </h2>
     </x-slot>
 
@@ -23,13 +23,13 @@
 
                     @endif
                     <div class="flex items-center justify-end">
-                        <a href="{{route('person.create')}}"
+                        <a href="{{route('business.index')}}"
                            class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900
                        focus:outline-none bg-white rounded-lg border border-gray-200
                        hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4
                        focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800
                        dark:text-gray-400 dark:border-gray-600 dark:hover:text-white
-                       dark:hover:bg-gray-700">Add New Person</a>
+                       dark:hover:bg-gray-700">Back</a>
                     </div>
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -37,16 +37,10 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Name
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Email
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Phone
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Business Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Contact email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Action
@@ -54,27 +48,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($person as $per)
+                                @foreach($business as $bus)
                                     <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                                        <th scope="row" class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{$per->first_name}} {{$per->last_name}}
-                                        </th>
                                         <td class="px-6 py-4">
-                                            {{$per->email}}
+                                            {{$bus?->business_name}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{$per->phone}}
-                                        </td>
-                                        <td class="px-6 py-4 lin {{($per->business?->deleted_at)  ? 'italic line-through font-bold' : 'non-italic'}}">
-                                            {{$per->business?->business_name}}
+                                            {{$bus?->contact_email}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href="{{route('person.edit',$per->id)}}" class="font-medium m-2 text-blue-600 dark:text-blue-500 hover:underline">
-                                                <svg class="w-6 h-6 text-gray-800 dark:text-white inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3"/>
-                                                </svg>
-                                            </a>
-                                            <form action="{{route('person.destroy',$per->id)}}" method="post" class="inline">
+                                            <form action="{{route('business.forceDelete',$bus->id)}}" method="post" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline focus:outline-none">

@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Person extends Model
 {
+    use HasFactory, SoftDeletes;
 
     // if i want to eager load a relation to whole model
     /*         protected $with = ['business'];        */
 
-    use HasFactory, SoftDeletes;
     protected $fillable = [
         'first_name',
         'last_name',
@@ -22,6 +22,6 @@ class Person extends Model
     ];
     public function business()
     {
-        return $this->belongsTo(Business::class)->withDefault(['business_name' => 'No Business']);
+        return $this->belongsTo(Business::class)->withTrashed()/*->withDefault(['business_name' => 'No Business'])*/;
     }
 }
